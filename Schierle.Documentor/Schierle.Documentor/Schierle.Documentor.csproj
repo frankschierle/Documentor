@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.3</TargetFramework>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <PackageId>Documentor</PackageId>
+    <PackageVersion>1.0.0.0</PackageVersion>
+    <Authors>frank s. schierle</Authors>
+    <PackageLicenseUrl>https://github.com/frankschierle/Documentor/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/frankschierle/Documentor</PackageProjectUrl>
+    <PackageIconUrl></PackageIconUrl>
+    <RepositoryUrl>https://github.com/frankschierle/Documentor</RepositoryUrl>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Description>Analyzes the XML documentation included in C# source code.</Description>
+    <PackageReleaseNotes></PackageReleaseNotes>
+    <Copyright>Copyright Frank S. Schierle</Copyright>
+    <PackageTags>Schierle.Documentor, Documentor, code style, documentation, xml, analyzers</PackageTags>
+    <NoPackageAnalysis>true</NoPackageAnalysis>
+    <Company />
+  </PropertyGroup>
+   
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="2.4.0" PrivateAssets="all" />
+    <PackageReference Update="NETStandard.Library" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="tools\*.ps1" CopyToOutputDirectory="Always" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+</Project>

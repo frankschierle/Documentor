@@ -1,0 +1,15 @@
+# User settings
+*.suo
+*.user
+.vs/
+
+# Build results
+**/[Dd]ebug/
+**/[Rr]elease/
+**/[Oo]bj/
+
+# Test results
+[Tt]est[Rr]esult*/
+
+# NuGet
+**/[Pp]ackages/*
