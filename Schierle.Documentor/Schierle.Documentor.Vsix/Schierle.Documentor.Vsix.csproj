@@ -68,6 +68,11 @@
     <StartArguments>/rootsuffix Roslyn</StartArguments>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="..\..\Assets\Icon32.png">
+      <Link>Icon32.png</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\..\LICENSE">
       <Link>LICENSE</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
