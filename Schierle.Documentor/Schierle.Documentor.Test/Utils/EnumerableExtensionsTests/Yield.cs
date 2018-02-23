@@ -19,7 +19,7 @@
       // Arrange
       string obj = "HelloWorld";
       IEnumerable<string> actualResult;
-      var expectedResult = new[] { obj };
+      string[] expectedResult = new[] { obj };
 
       // Act
       actualResult = obj.Yield();
@@ -35,7 +35,7 @@
       //Arrange
       string obj = null;
       IEnumerable<string> actualResult;
-      var expectedResult = new string[] { null };
+      string[] expectedResult = new string[] { null };
 
       // Act
       actualResult = obj.Yield();
