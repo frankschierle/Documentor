@@ -1,11 +1,11 @@
-﻿namespace Schierle.Documentor.Test.Analyzers.DR0001ElementsMustBeDocumentedTests
+﻿namespace Schierle.Documentor.Test.Analyzers.ElementsMustBeDocumentedTests
 {
   using Microsoft.VisualStudio.TestTools.UnitTesting;
 
   using Schierle.Documentor.Analyzers;
 
   [TestClass]
-  public partial class DR0001ElementsMustBeDocumentedTest : DiagnosticVerifierBase
+  public partial class ElementsMustBeDocumentedTest : DiagnosticVerifierBase
   {
     #region Fields
 
@@ -19,7 +19,7 @@
     {
       if (this.analyzer == null)
       {
-        this.analyzer = new DR0001ElementsMustBeDocumented();
+        this.analyzer = new ElementsMustBeDocumented();
       }
 
       return this.analyzer;

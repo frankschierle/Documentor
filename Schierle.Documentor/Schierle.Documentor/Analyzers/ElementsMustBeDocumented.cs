@@ -12,14 +12,14 @@
 
   /// <summary>Checks that all code element are documented.</summary>
   [DiagnosticAnalyzer(LanguageNames.CSharp)]
-  public class DR0001ElementsMustBeDocumented : AnalyzerBase
+  public class ElementsMustBeDocumented : AnalyzerBase
   {
     #region Public Properties
 
     /// <inheritdoc />
     public override string Id
     {
-      get { return "DR0001"; }
+      get { return AnalyzerIds.ElementsMustBeDocumented; }
     }
 
     /// <inheritdoc />

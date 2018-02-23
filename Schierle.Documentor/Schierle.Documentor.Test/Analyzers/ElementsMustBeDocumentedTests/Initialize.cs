@@ -1,8 +1,8 @@
-﻿namespace Schierle.Documentor.Test.Analyzers.DR0001ElementsMustBeDocumentedTests
+﻿namespace Schierle.Documentor.Test.Analyzers.ElementsMustBeDocumentedTests
 {
   using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-  public partial class DR0001ElementsMustBeDocumentedTest
+  public partial class ElementsMustBeDocumentedTest
   {
     #region Public Indexers
 
