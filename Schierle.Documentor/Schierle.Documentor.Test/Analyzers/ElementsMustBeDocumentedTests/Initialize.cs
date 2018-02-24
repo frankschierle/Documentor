@@ -4,15 +4,6 @@
 
   public partial class ElementsMustBeDocumentedTest
   {
-    #region Public Indexers
-
-    public int this[int i]
-    {
-      set { }
-    }
-
-    #endregion
-
     #region Public Methods and Operators
 
     [TestMethod]
