@@ -1,6 +1,7 @@
 ﻿namespace Schierle.Documentor.Utils
 {
   using System;
+  using System.Collections.Generic;
   using System.Linq;
 
   using Microsoft.CodeAnalysis;
@@ -17,7 +18,7 @@
     /// <exception cref="ArgumentNullException">Occurs if <paramref name="syntaxNode" /> is null.</exception>
     public static bool HasDocumentationHeader(SyntaxNode syntaxNode)
     {
-      DocumentationCommentTriviaSyntax docTrivia;
+      IEnumerable<DocumentationCommentTriviaSyntax> docTrivia;
 
       if (syntaxNode == null)
       {
@@ -26,7 +27,41 @@
 
       docTrivia = GetDocumentationTrivia(syntaxNode);
 
-      return docTrivia != null;
+      return docTrivia.Any();
+    }
+
+    /// <summary>Gets the position of a declarations first empty documentation tag.</summary>
+    /// <param name="declaration">The declaration.</param>
+    /// <returns>The position of the declarations first empty documentation tag.
+    /// A value less than zero (0) will be returned, if no empty documentation tag exists.</returns>
+    public static int GetPositionOfFirstEmptyDocumentationTag(MemberDeclarationSyntax declaration)
+    {
+      IEnumerable<XmlElementSyntax> docTrivia;
+      IEnumerable<XmlElementSyntax> emptyTrivia;
+      XmlElementSyntax firstEmptyTrivia;
+      XmlElementSyntax firstTrivia;
+      int result = -1;
+      int offset = 0;
+
+      docTrivia = DocumentationHelper.GetDocumentationTrivia(declaration).SelectMany(t => t.Content.OfType<XmlElementSyntax>());
+      emptyTrivia = docTrivia.Where(t => !t.ChildNodes().OfType<XmlTextSyntax>().Any());
+      firstTrivia = docTrivia.FirstOrDefault();
+      firstEmptyTrivia = emptyTrivia.FirstOrDefault();
+
+      if (firstEmptyTrivia != null)
+      {
+        // Bugfix: Leading trivia is not taken into account if the empty trivia
+        // is not the *first* trivia.
+        // => Add the length of the leading trivia as offset.
+        if (firstEmptyTrivia != firstTrivia)
+        {
+          offset = firstEmptyTrivia.GetLeadingTrivia().FullSpan.Length;
+        }
+
+        result = firstEmptyTrivia.EndTag.SpanStart + offset;
+      }
+
+      return result;
     }
 
     #endregion
@@ -35,17 +70,16 @@
 
     /// <summary>Gets the documentation trivia of a syntax node.</summary>
     /// <param name="syntaxNode">The syntax node to get the documentation trivia for.</param>
-    /// <returns>The documentation trivia of the <paramref name="syntaxNode" /> or null if no documentation header exists.</returns>
-    private static DocumentationCommentTriviaSyntax GetDocumentationTrivia(SyntaxNode syntaxNode)
+    /// <returns>The documentation trivia of the <paramref name="syntaxNode" />.</returns>
+    private static IEnumerable<DocumentationCommentTriviaSyntax> GetDocumentationTrivia(SyntaxNode syntaxNode)
     {
+      IEnumerable<DocumentationCommentTriviaSyntax> docTrivia;
       SyntaxTriviaList leadingTrivia;
-      DocumentationCommentTriviaSyntax docTrivia;
 
       leadingTrivia = syntaxNode.GetLeadingTrivia();
       docTrivia = leadingTrivia
         .Select(t => t.GetStructure())
-        .OfType<DocumentationCommentTriviaSyntax>()
-        .FirstOrDefault();
+        .OfType<DocumentationCommentTriviaSyntax>();
 
       return docTrivia;
     }
