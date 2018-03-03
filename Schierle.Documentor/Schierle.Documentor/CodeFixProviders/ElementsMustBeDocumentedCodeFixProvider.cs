@@ -11,6 +11,7 @@
   using Microsoft.CodeAnalysis.CodeFixes;
   using Microsoft.CodeAnalysis.CSharp;
   using Microsoft.CodeAnalysis.CSharp.Syntax;
+  using Microsoft.CodeAnalysis.Formatting;
 
   using Schierle.Documentor.Analyzers;
   using Schierle.Documentor.CodeActions;
@@ -66,6 +67,9 @@
       MemberDeclarationSyntax targetNode = syntaxNode.AncestorsAndSelf().OfType<MemberDeclarationSyntax>().First();
       SyntaxNode newSyntaxNode = DocumentationBuilder.AddCompleteDocumentationHeader(targetNode);
       Document newDocument = document.WithSyntaxRoot(root.ReplaceNode(targetNode, newSyntaxNode));
+
+      // Make sure the document is well formatted
+      newDocument = await Formatter.FormatAsync(newDocument, newDocument.Project.Solution.Options, cancellationToken);
 
       return newDocument.Project.Solution;
     }

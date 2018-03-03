@@ -39,26 +39,15 @@
       IEnumerable<XmlElementSyntax> docTrivia;
       IEnumerable<XmlElementSyntax> emptyTrivia;
       XmlElementSyntax firstEmptyTrivia;
-      XmlElementSyntax firstTrivia;
       int result = -1;
-      int offset = 0;
 
       docTrivia = DocumentationHelper.GetDocumentationTrivia(declaration).SelectMany(t => t.Content.OfType<XmlElementSyntax>());
       emptyTrivia = docTrivia.Where(t => !t.ChildNodes().OfType<XmlTextSyntax>().Any());
-      firstTrivia = docTrivia.FirstOrDefault();
       firstEmptyTrivia = emptyTrivia.FirstOrDefault();
 
       if (firstEmptyTrivia != null)
       {
-        // Bugfix: Leading trivia is not taken into account if the empty trivia
-        // is not the *first* trivia.
-        // => Add the length of the leading trivia as offset.
-        if (firstEmptyTrivia != firstTrivia)
-        {
-          offset = firstEmptyTrivia.GetLeadingTrivia().FullSpan.Length;
-        }
-
-        result = firstEmptyTrivia.EndTag.SpanStart + offset;
+        result = firstEmptyTrivia.EndTag.SpanStart;
       }
 
       return result;

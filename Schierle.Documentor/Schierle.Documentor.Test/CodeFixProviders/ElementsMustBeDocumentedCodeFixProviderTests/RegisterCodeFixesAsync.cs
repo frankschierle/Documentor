@@ -258,7 +258,8 @@ public enum TestEnum {
 }";
 
       string expectedResult = @"/// <summary></summary>
-public enum TestEnum {
+public enum TestEnum
+{
     /// <summary></summary>
     TestMember = 1,
 }";
